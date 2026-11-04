@@ -1,0 +1,286 @@
+{
+    "users": [
+        {
+            "role": "Peserta",
+            "idUser": "USR-01",
+            "nama": "Muhammad Isya Asyhari",
+            "email": "isya@mahasiswa.ac.id",
+            "password": "password123",
+            "nim": "21120124130051",
+            "noTelepon": "0812-3456-7890"
+        },
+        {
+            "role": "Panitia",
+            "idUser": "ADM-01",
+            "nama": "Panitia Tiket Gedung",
+            "email": "panitia@kampus.ac.id",
+            "password": "panitia123",
+            "jabatan": "Koordinator Registrasi & Pintu Masuk"
+        }
+    ],
+    "events": [
+        {
+            "idEvent": "EVT-01",
+            "namaEvent": "Seminar Nasional Rekayasa Perangkat Lunak & Kecerdasan Artifisial 2026",
+            "deskripsi": "Seminar tahunan eksplorasi arsitektur microservices modern, cloud native computing, dan implementasi machine learning enterprise bersama pakar industri teknologi.",
+            "tanggal": "2026-11-28 08:30:00",
+            "lokasi": "Auditorium Gedung Prof. Soedarto, Tembalang",
+            "kuota": 100,
+            "tiketTerjual": 85,
+            "statusEvent": "Buka",
+            "hargaDasar": 45000,
+            "kategori": "Seminar Nasional"
+        },
+        {
+            "idEvent": "EVT-02",
+            "namaEvent": "Workshop UI/UX Design System & Prototyping Interaktif",
+            "deskripsi": "Pelatihan intensif satu hari merancang design token konsisten, micro-interaction responsif, dan pengujian kegunaan purwarupa antarmuka produk digital.",
+            "tanggal": "2026-12-05 09:00:00",
+            "lokasi": "Lab Komputer Rekayasa Perangkat Lunak Gedung B",
+            "kuota": 40,
+            "tiketTerjual": 28,
+            "statusEvent": "Tutup",
+            "hargaDasar": 35000,
+            "kategori": "Workshop Hands-on"
+        },
+        {
+            "idEvent": "EVT-03",
+            "namaEvent": "Hackathon Mahasiswa Solusi Digital Berkelanjutan 2026",
+            "deskripsi": "Kompetisi pembuatan aplikasi 24 jam non-stop menyelesaikan permasalahan mobilitas kampus dan efisiensi energi fasilitas universitas.",
+            "tanggal": "2026-12-19 08:00:00",
+            "lokasi": "Hall Gedung Robotika & Otomasi Lantai 2",
+            "kuota": 60,
+            "tiketTerjual": 54,
+            "statusEvent": "Tutup",
+            "hargaDasar": 60000,
+            "kategori": "Kompetisi"
+        }
+    ],
+    "promos": [
+        {
+            "kode": "MHSHEMAT",
+            "persenDiskon": 0.2,
+            "maksPotongan": 20000,
+            "masaBerlaku": "2026-12-31",
+            "kuotaPemakaian": 45,
+            "keterangan": "Diskon 20% khusus mahasiswa hingga Rp 20.000"
+        },
+        {
+            "kode": "SEMINARTEKNO",
+            "persenDiskon": 0.15,
+            "maksPotongan": 15000,
+            "masaBerlaku": "2026-12-31",
+            "kuotaPemakaian": 30,
+            "keterangan": "Potongan 15% untuk semua kategori tiket seminar"
+        },
+        {
+            "kode": "UNDIPJUARA",
+            "persenDiskon": 0.25,
+            "maksPotongan": 30000,
+            "masaBerlaku": "2026-12-31",
+            "kuotaPemakaian": 100,
+            "keterangan": "Diskon 25% Mahasiswa Undip"
+        }
+    ],
+    "orders": [
+        {
+            "idPesanan": "ORD-2026-001",
+            "idPeserta": "USR-01",
+            "idEvent": "EVT-01",
+            "tanggalPesan": "2026-11-01 10:20:00",
+            "statusPesanan": "KONFIRMASI",
+            "kodePromo": "MHSHEMAT",
+            "metodeBayar": "Transfer",
+            "namaBank": "Bank Mandiri",
+            "noRekening": "137-00-2819201-9",
+            "biayaAdmin": 2500,
+            "subtotal": 80000,
+            "potongan": 16000,
+            "totalBayar": 66500,
+            "statusBayar": "LUNAS"
+        },
+        {
+            "idPesanan": "ORD-00BF70CF",
+            "idPeserta": "USR-01",
+            "idEvent": "EVT-01",
+            "tanggalPesan": "2026-11-04 15:25:43",
+            "statusPesanan": "KONFIRMASI",
+            "kodePromo": null,
+            "metodeBayar": "ewallet",
+            "namaMetode": "E-Wallet (GoPay)",
+            "biayaAdmin": 1000,
+            "subtotal": 80000,
+            "potongan": 0,
+            "totalBayar": 81000,
+            "statusBayar": "LUNAS",
+            "tiket": [
+                "ETX-26-VIP-389"
+            ]
+        },
+        {
+            "idPesanan": "ORD-206BE54C",
+            "idPeserta": "USR-01",
+            "idEvent": "EVT-04",
+            "tanggalPesan": "2026-11-04 15:37:36",
+            "statusPesanan": "KONFIRMASI",
+            "kodePromo": "SEMINARTEKNO",
+            "metodeBayar": "transfer",
+            "namaMetode": "Transfer Bank (Bank Mandiri)",
+            "biayaAdmin": 2500,
+            "subtotal": 10000,
+            "potongan": 1500,
+            "totalBayar": 11000,
+            "statusBayar": "LUNAS",
+            "tiket": [
+                "ETX-26-REGULER-133"
+            ]
+        },
+        {
+            "idPesanan": "ORD-86140CFD",
+            "idPeserta": "USR-01",
+            "idEvent": "EVT-01",
+            "tanggalPesan": "2026-11-04 15:57:41",
+            "statusPesanan": "KONFIRMASI",
+            "kodePromo": null,
+            "metodeBayar": "transfer",
+            "namaMetode": "Transfer Bank (Bank Mandiri)",
+            "biayaAdmin": 2500,
+            "subtotal": 90000,
+            "potongan": 0,
+            "totalBayar": 92500,
+            "statusBayar": "LUNAS",
+            "tiket": [
+                "ETX-26-REG-262",
+                "ETX-26-REG-516"
+            ]
+        }
+    ],
+    "tickets": [
+        {
+            "kodeTiket": "ETX-2026-VIP-910",
+            "jenis": "VIP",
+            "hargaDasar": 45000,
+            "biayaLayananVIP": 35000,
+            "nomorKursi": "A-04",
+            "statusTiket": "TERPAKAI",
+            "idEvent": "EVT-01",
+            "idPesanan": "ORD-2026-001"
+        },
+        {
+            "kodeTiket": "ETX-26-VIP-389",
+            "jenis": "VIP",
+            "hargaDasar": 45000,
+            "statusTiket": "AKTIF",
+            "idEvent": "EVT-01",
+            "idPesanan": "ORD-00BF70CF",
+            "biayaLayananVIP": 35000,
+            "nomorKursi": "A-04"
+        },
+        {
+            "kodeTiket": "ETX-26-REGULER-133",
+            "jenis": "Reguler",
+            "hargaDasar": 10000,
+            "statusTiket": "TERPAKAI",
+            "idEvent": "EVT-04",
+            "idPesanan": "ORD-206BE54C"
+        },
+        {
+            "kodeTiket": "ETX-26-REG-262",
+            "jenis": "Reguler",
+            "hargaDasar": 45000,
+            "statusTiket": "AKTIF",
+            "idEvent": "EVT-01",
+            "idPesanan": "ORD-86140CFD"
+        },
+        {
+            "kodeTiket": "ETX-26-REG-516",
+            "jenis": "Reguler",
+            "hargaDasar": 45000,
+            "statusTiket": "AKTIF",
+            "idEvent": "EVT-01",
+            "idPesanan": "ORD-86140CFD"
+        }
+    ],
+    "checkins": [
+        {
+            "idCheckIn": "CHK-B8C878",
+            "kodeTiket": "ETX-2026-VIP-910",
+            "statusValidasi": "VALID",
+            "catatan": "Tiket terverifikasi asli dan peserta dipersilakan masuk ke ruangan acara.",
+            "namaPetugas": "Muhammad Isya Asyhari",
+            "waktuCheckIn": "2026-11-04 15:03:32"
+        },
+        {
+            "idCheckIn": "CHK-6AAA72",
+            "kodeTiket": "ETX-2026-VIP-910",
+            "statusValidasi": "DITOLAK",
+            "catatan": "Tiket ini sudah pernah digunakan untuk check-in sebelumnya.",
+            "namaPetugas": "Muhammad Isya Asyhari",
+            "waktuCheckIn": "2026-11-04 15:03:35"
+        },
+        {
+            "idCheckIn": "CHK-749F58",
+            "kodeTiket": "ETX-2026-VIP-910",
+            "statusValidasi": "DITOLAK",
+            "catatan": "Tiket ini sudah pernah digunakan untuk check-in sebelumnya.",
+            "namaPetugas": "Muhammad Isya Asyhari",
+            "waktuCheckIn": "2026-11-04 15:18:03"
+        },
+        {
+            "idCheckIn": "CHK-2EA682",
+            "kodeTiket": "ETX-2026-VIP-910",
+            "statusValidasi": "DITOLAK",
+            "catatan": "Tiket ini sudah pernah digunakan untuk check-in sebelumnya.",
+            "namaPetugas": "Muhammad Isya Asyhari",
+            "waktuCheckIn": "2026-11-04 15:18:07"
+        },
+        {
+            "idCheckIn": "CHK-3B3CAD",
+            "kodeTiket": "ETX-2026-VIP-910",
+            "statusValidasi": "DITOLAK",
+            "catatan": "Tiket ini sudah pernah digunakan untuk check-in sebelumnya.",
+            "namaPetugas": "Panitia Tiket Gedung",
+            "waktuCheckIn": "2026-11-04 15:26:53"
+        },
+        {
+            "idCheckIn": "CHK-EC7D4F",
+            "kodeTiket": "ETX-2026-VIP-910",
+            "statusValidasi": "DITOLAK",
+            "catatan": "Tiket ini sudah pernah digunakan untuk check-in sebelumnya.",
+            "namaPetugas": "Panitia Tiket Gedung",
+            "waktuCheckIn": "2026-11-04 15:26:57"
+        },
+        {
+            "idCheckIn": "CHK-4906EF",
+            "kodeTiket": "ETX-2026-VIP-911",
+            "statusValidasi": "DITOLAK",
+            "catatan": "Kode tiket tidak ditemukan dalam sistem. Periksa kembali karakter kode tiket atau pastikan tiket telah dibayar.",
+            "namaPetugas": "Panitia Tiket Gedung",
+            "waktuCheckIn": "2026-11-04 15:27:02"
+        },
+        {
+            "idCheckIn": "CHK-3E2A81",
+            "kodeTiket": "ETX-26-REGULER-133",
+            "statusValidasi": "VALID",
+            "catatan": "Tiket terverifikasi asli dan peserta dipersilakan masuk ke ruangan acara.",
+            "namaPetugas": "Panitia Tiket Gedung",
+            "waktuCheckIn": "2026-11-04 15:41:55"
+        },
+        {
+            "idCheckIn": "CHK-1DA655",
+            "kodeTiket": "ETX-26-REGULER-133",
+            "statusValidasi": "DITOLAK",
+            "catatan": "Tiket ini sudah pernah digunakan untuk check-in sebelumnya.",
+            "namaPetugas": "Panitia Tiket Gedung",
+            "waktuCheckIn": "2026-11-04 15:41:58"
+        },
+        {
+            "idCheckIn": "CHK-B294CE",
+            "kodeTiket": "ETX-2026-VIP-910",
+            "statusValidasi": "DITOLAK",
+            "catatan": "Tiket ini sudah pernah digunakan untuk check-in sebelumnya.",
+            "namaPetugas": "Panitia Tiket Gedung",
+            "waktuCheckIn": "2026-11-04 15:45:00"
+        }
+    ]
+}

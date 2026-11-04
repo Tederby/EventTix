@@ -1,0 +1,966 @@
+/* ==========================================================================
+   EventTix - Identitas Visual Tiket Fisik & Seminar Kampus
+   Design Tokens & Shared Stylesheet
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Google Fonts Import (dengan Fallback Handal untuk Lingkungan Offline)
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Mono:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+/* --------------------------------------------------------------------------
+   2. Design Tokens (CSS Custom Properties)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Palet Warna Resmi */
+  --color-tinta: #14213D;            /* Teks utama, judul, bingkai tegas */
+  --color-karton: #EEF1F6;           /* Latar halaman, biru keabuan dingin */
+  --color-kuning: #FFC93C;           /* Aksen utama, tombol utama */
+  --color-biru-abu: #5B6477;         /* Teks sekunder, label, perforasi pasif */
+  --color-hijau-cap: #1F7A4D;        /* Cap VALID, LUNAS, AKTIF */
+  --color-merah-cap: #C8322B;        /* Cap DITOLAK, GAGAL, DIBATALKAN */
+
+  /* Warna Permukaan & Garis Tambahan */
+  --color-putih: #FFFFFF;            /* Kertas karcis murni */
+  --color-garis-halus: #D6DDE8;      /* Garis tabel & batas bidang */
+  --color-perforasi: #B8C4D6;        /* Garis putus-putus perforasi fisik */
+  --color-abu-terpakai: #6B7280;     /* Cap TERPAKAI */
+
+  /* Tipografi */
+  --font-display: 'Archivo', system-ui, -apple-system, Arial, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+
+  /* Skala Tipografi Konsisten */
+  --text-40: 2.5rem;      /* 40px - Angka besar & judul hero */
+  --text-28: 1.75rem;     /* 28px - Judul halaman & kode karcis */
+  --text-20: 1.25rem;     /* 20px - Subjudul & nama karcis */
+  --text-16: 1rem;        /* 16px - Teks isi, tombol, input */
+  --text-14: 0.875rem;    /* 14px - Teks sekunder, meta, tabel */
+  --text-12: 0.75rem;     /* 12px - Label mikro & nomor kursi */
+
+  /* Jarak Konsisten */
+  --space-4: 0.25rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-20: 1.25rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+
+  /* Radius & Bingkai */
+  --border-tegas: 2px solid var(--color-tinta);
+  --border-tipis: 1px solid var(--color-garis-halus);
+  --radius-karcis: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Reset & Gaya Dasar
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  background-color: var(--color-karton);
+  color: var(--color-tinta);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-karton);
+  color: var(--color-tinta);
+}
+
+/* Batas panjang baris teks < 80 karakter untuk keterbacaan optimal */
+p, .prose, .event-deskripsi {
+  max-width: 72ch;
+}
+
+/* Tipografi Hirarkis */
+h1, h2, h3, .heading-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--color-tinta);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: var(--text-40); }
+h2 { font-size: var(--text-28); }
+h3 { font-size: var(--text-20); }
+
+/* Fokus Aksesibilitas Keyboard WCAG AA */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--color-kuning);
+  outline-offset: 2px;
+}
+
+/* Tautan */
+a {
+  color: var(--color-tinta);
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   4. Tata Letak Kontainer & Header
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-16);
+  padding-right: var(--space-16);
+}
+
+.site-header {
+  background-color: var(--color-tinta);
+  color: var(--color-putih);
+  border-bottom: 3px solid var(--color-kuning);
+  padding: var(--space-12) 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.brand-logo {
+  font-family: var(--font-display);
+  font-size: var(--text-20);
+  font-weight: 800;
+  color: var(--color-putih);
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.brand-tag {
+  background-color: var(--color-kuning);
+  color: var(--color-tinta);
+  font-family: var(--font-mono);
+  font-size: var(--text-12);
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+.site-nav a {
+  color: #D1D8E6;
+  font-size: var(--text-14);
+  font-weight: 500;
+  padding: var(--space-4) var(--space-8);
+  border-radius: 2px;
+  transition: color 0.15s ease;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+  color: var(--color-putih);
+}
+
+.site-nav a.active {
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-kuning);
+}
+
+.user-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.role-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-12);
+  padding: 3px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #E2E8F0;
+  border-radius: 2px;
+}
+
+.btn-keluar {
+  color: #E2E8F0;
+  font-size: var(--text-14);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.btn-keluar:hover {
+  color: var(--color-kuning);
+}
+
+/* --------------------------------------------------------------------------
+   5. Tombol (Sesuai Konvensi Teks Antarmuka)
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--text-16);
+  font-weight: 600;
+  padding: var(--space-12) var(--space-20);
+  border-radius: 2px;
+  cursor: pointer;
+  border: 2px solid var(--color-tinta);
+  text-align: center;
+  text-decoration: none;
+  background-color: var(--color-putih);
+  color: var(--color-tinta);
+  min-height: 44px; /* Target sentuh ramah jempol HP */
+}
+
+/* Tombol Utama (Kuning Stabilo) */
+.btn-primary {
+  background-color: var(--color-kuning);
+  color: var(--color-tinta);
+  border-color: var(--color-tinta);
+}
+
+.btn-primary:hover {
+  background-color: #FBBF24;
+}
+
+/* Tombol Sekunder */
+.btn-secondary {
+  background-color: var(--color-putih);
+  color: var(--color-tinta);
+  border-color: var(--color-tinta);
+}
+
+.btn-secondary:hover {
+  background-color: #F1F4F9;
+}
+
+/* Tombol Aksi Bahaya / Tutup */
+.btn-danger {
+  background-color: var(--color-merah-cap);
+  color: var(--color-putih);
+  border-color: var(--color-tinta);
+}
+
+.btn-danger:hover {
+  background-color: #B22822;
+}
+
+.btn-sm {
+  font-size: var(--text-14);
+  padding: var(--space-8) var(--space-12);
+  min-height: 36px;
+}
+
+.btn-lg {
+  font-size: var(--text-20);
+  font-family: var(--font-display);
+  font-weight: 700;
+  padding: var(--space-16) var(--space-24);
+  min-height: 52px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Motif Khas: Karcis Fisik (Ticket Body, Perforation & Stub)
+   -------------------------------------------------------------------------- */
+.ticket-card {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--color-putih);
+  border: var(--border-tegas);
+  border-radius: var(--radius-karcis);
+  position: relative;
+  overflow: visible;
+  margin-bottom: var(--space-24);
+}
+
+/* Badan Tiket */
+.ticket-body {
+  flex: 1 1 68%;
+  padding: var(--space-24);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Garis Perforasi & Notch Lengkung */
+.ticket-perforation {
+  position: relative;
+  width: 0;
+  border-left: 2px dashed var(--color-perforasi);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Potongan lengkung di kedua sisi (notches die-cut memotong ke dalam karcis) */
+.ticket-notch-top {
+  position: absolute;
+  top: -2px;
+  left: -13px;
+  width: 26px;
+  height: 13px;
+  border-radius: 0 0 14px 14px;
+  background-color: var(--color-karton);
+  border: 2px solid var(--color-tinta);
+  border-top: none;
+  z-index: 5;
+}
+
+.ticket-notch-bottom {
+  position: absolute;
+  bottom: -2px;
+  left: -13px;
+  width: 26px;
+  height: 13px;
+  border-radius: 14px 14px 0 0;
+  background-color: var(--color-karton);
+  border: 2px solid var(--color-tinta);
+  border-bottom: none;
+  z-index: 5;
+}
+
+/* Kupon Sobek (Tear-off Stub) */
+.ticket-stub {
+  flex: 0 0 35%;
+  min-width: 280px;
+  padding: var(--space-24);
+  background-color: #F8FAFC;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: none;
+}
+
+/* Karcis Event Terdekat (Katalog Hero) */
+.ticket-card--hero {
+  border-width: 3px;
+  /* Dihapus: bayangan dekoratif artifisial, membiarkan karcis fisik tegak & bersih di atas karton */
+}
+
+.ticket-card--hero .ticket-body {
+  padding: var(--space-32);
+}
+
+.ticket-card--hero .ticket-stub {
+  padding: var(--space-32);
+  background-color: #F4F7FB;
+}
+
+/* Karcis Horizontal Ringkas (Daftar Acara Lain) */
+.ticket-card--compact {
+  margin-bottom: var(--space-16);
+}
+
+.ticket-card--compact .ticket-body {
+  padding: var(--space-16) var(--space-20);
+}
+
+.ticket-card--compact .ticket-stub {
+  padding: var(--space-16) var(--space-20);
+  min-width: 240px;
+}
+
+/* DIFERENSIASI FISIK TIKET VIP (Pita Bersambung di Tepi Kupon) */
+.ticket-card--vip {
+  border-color: var(--color-tinta);
+}
+
+.ticket-card--vip .ticket-stub {
+  position: relative;
+  background-color: #FFFAEE;
+  /* Pita bersambung fisik di sisi kanan kupon */
+  border-right: 12px solid var(--color-kuning);
+}
+
+.ticket-vip-ribbon {
+  display: inline-block;
+  background-color: var(--color-tinta);
+  color: var(--color-kuning);
+  font-family: var(--font-display);
+  font-size: var(--text-12);
+  font-weight: 800;
+  padding: 4px 8px;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-12);
+  align-self: flex-start;
+}
+
+/* Kursi Bernomor VIP */
+.ticket-seat-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-14);
+  font-weight: 700;
+  background-color: var(--color-kuning);
+  color: var(--color-tinta);
+  padding: 4px 8px;
+  border: 1px solid var(--color-tinta);
+  display: inline-block;
+  margin-top: var(--space-8);
+}
+
+/* --------------------------------------------------------------------------
+   7. Batang Bersegmen (Sisa Kuota Fisik)
+   -------------------------------------------------------------------------- */
+.quota-box {
+  margin-top: var(--space-16);
+  margin-bottom: var(--space-16);
+}
+
+.quota-label {
+  font-size: var(--text-14);
+  color: var(--color-biru-abu);
+  margin-bottom: var(--space-4);
+  display: flex;
+  justify-content: space-between;
+}
+
+.segmented-bar {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+  height: 12px;
+  margin-bottom: var(--space-4);
+}
+
+.segment-cell {
+  flex: 1;
+  background-color: #E2E8F0;
+  border: 1px solid var(--color-biru-abu);
+  border-radius: 1px;
+}
+
+.segment-cell.filled {
+  background-color: var(--color-tinta);
+}
+
+.segment-cell.warning {
+  background-color: var(--color-kuning);
+}
+
+/* --------------------------------------------------------------------------
+   8. Cap Status (Stamp - Titik Keberanian Visual)
+   -------------------------------------------------------------------------- */
+.stamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-16);
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  transform: rotate(-5deg);
+  border-radius: 3px;
+  user-select: none;
+  line-height: 1.1;
+  text-align: center;
+}
+
+/* Cap Valid / Aktif / Lunas (Hijau Cap) */
+.stamp--valid,
+.stamp--aktif,
+.stamp--lunas {
+  color: var(--color-hijau-cap);
+  border: 3px solid var(--color-hijau-cap);
+  outline: 1px dashed var(--color-hijau-cap);
+  outline-offset: 3px;
+  background-color: rgba(31, 122, 77, 0.05);
+}
+
+/* Cap Ditolak / Gagal / Batal (Merah Cap) */
+.stamp--ditolak,
+.stamp--batal,
+.stamp--gagal {
+  color: var(--color-merah-cap);
+  border: 3px solid var(--color-merah-cap);
+  outline: 1px dashed var(--color-merah-cap);
+  outline-offset: 3px;
+  background-color: rgba(200, 50, 43, 0.05);
+}
+
+/* Cap Terpakai (Biru Abu) */
+.stamp--terpakai {
+  color: var(--color-biru-abu);
+  border: 3px solid var(--color-biru-abu);
+  outline: 1px dashed var(--color-biru-abu);
+  outline-offset: 3px;
+  background-color: rgba(91, 100, 119, 0.05);
+}
+
+.stamp-lg {
+  font-size: var(--text-28);
+  padding: var(--space-12) var(--space-24);
+  border-width: 4px;
+}
+
+/* SATU-SATUNYA ANIMASI: Hentakan Cap Check-in */
+@keyframes stampImpact {
+  0% {
+    transform: rotate(-10deg) scale(2.2);
+    opacity: 0;
+  }
+  60% {
+    transform: rotate(-6deg) scale(0.95);
+    opacity: 0.95;
+  }
+  100% {
+    transform: rotate(-5deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.stamp--animated {
+  animation: stampImpact 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Hormati prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .stamp--animated {
+    animation: none !important;
+    transform: rotate(-5deg) scale(1) !important;
+    opacity: 1 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. Halaman Tiket Digital (Ekspresif & Cetak)
+   -------------------------------------------------------------------------- */
+.ticket-digital-wrapper {
+  max-width: 820px;
+  margin: var(--space-32) auto;
+}
+
+.ticket-barcode-box {
+  background-color: #FAFBFD;
+  border: 1px solid var(--color-garis-halus);
+  padding: var(--space-12);
+  margin-top: var(--space-16);
+  text-align: center;
+}
+
+.ticket-code-display {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-tinta);
+  background-color: #EEF2F7;
+  padding: 8px 10px;
+  border: 2px solid var(--color-tinta);
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Dihapus: barcode-stripes dekoratif artifisial, diganti dengan kotak kode verifikasi fungsional */
+
+/* --------------------------------------------------------------------------
+   10. Stepper Tiga Langkah (Alur Pemesanan)
+   -------------------------------------------------------------------------- */
+.stepper-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--color-garis-halus);
+  margin-bottom: var(--space-32);
+  padding-bottom: var(--space-16);
+}
+
+.stepper-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-size: var(--text-16);
+  font-weight: 600;
+  color: var(--color-biru-abu);
+}
+
+.stepper-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--color-biru-abu);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-14);
+}
+
+.stepper-step.active {
+  color: var(--color-tinta);
+}
+
+.stepper-step.active .stepper-num {
+  background-color: var(--color-kuning);
+  border-color: var(--color-tinta);
+  color: var(--color-tinta);
+}
+
+.stepper-step.completed {
+  color: var(--color-hijau-cap);
+}
+
+.stepper-step.completed .stepper-num {
+  background-color: var(--color-hijau-cap);
+  border-color: var(--color-hijau-cap);
+  color: var(--color-putih);
+}
+
+/* Grid Alur Pesan & Ringkasan Harga */
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-32);
+  align-items: start;
+}
+
+.price-summary-card {
+  background-color: var(--color-putih);
+  border: var(--border-tegas);
+  border-radius: var(--radius-karcis);
+  padding: var(--space-24);
+  position: sticky;
+  top: 80px;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-16);
+  margin-bottom: var(--space-16);
+}
+
+.summary-table td {
+  padding: var(--space-8) 0;
+  font-size: var(--text-14);
+  border-bottom: 1px dashed var(--color-garis-halus);
+}
+
+.summary-table td.text-right {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--text-14);
+  font-weight: 600;
+}
+
+.summary-table tr.total-row td {
+  border-bottom: none;
+  border-top: 2px solid var(--color-tinta);
+  padding-top: var(--space-12);
+  font-size: var(--text-16);
+  font-weight: 700;
+}
+
+.summary-table tr.total-row td.text-right {
+  font-family: var(--font-display);
+  font-size: var(--text-20);
+  font-weight: 800;
+  color: var(--color-tinta);
+}
+
+/* --------------------------------------------------------------------------
+   11. Form, Input, & Notifikasi
+   -------------------------------------------------------------------------- */
+.form-group {
+  margin-bottom: var(--space-20);
+}
+
+.form-label {
+  display: block;
+  font-size: var(--text-14);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+  color: var(--color-tinta);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--space-12);
+  font-size: var(--text-16);
+  font-family: var(--font-body);
+  border: 2px solid var(--color-tinta);
+  background-color: var(--color-putih);
+  border-radius: 2px;
+  min-height: 44px;
+}
+
+.form-input:focus {
+  outline: 3px solid var(--color-kuning);
+}
+
+.input-huge {
+  font-family: var(--font-mono);
+  font-size: var(--text-28);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: var(--space-16);
+  text-transform: uppercase;
+}
+
+.alert {
+  padding: var(--space-12) var(--space-16);
+  border: 2px solid var(--color-tinta);
+  margin-bottom: var(--space-20);
+  font-size: var(--text-14);
+}
+
+.alert-success {
+  background-color: #E6F4EA;
+  border-color: var(--color-hijau-cap);
+  color: #0F5132;
+}
+
+.alert-danger {
+  background-color: #FCE8E6;
+  border-color: var(--color-merah-cap);
+  color: #842029;
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-48) var(--space-24);
+  background-color: var(--color-putih);
+  border: 2px dashed var(--color-biru-abu);
+  margin-bottom: var(--space-24);
+}
+
+.empty-state p {
+  margin: 0 auto var(--space-16);
+  color: var(--color-biru-abu);
+}
+
+/* --------------------------------------------------------------------------
+   12. Tabel Terstruktur (Dashboard & Rekap)
+   -------------------------------------------------------------------------- */
+.data-table-wrapper {
+  background-color: var(--color-putih);
+  border: var(--border-tegas);
+  overflow-x: auto;
+  margin-bottom: var(--space-32);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--text-14);
+}
+
+.data-table th {
+  background-color: #F1F4F9;
+  color: var(--color-tinta);
+  font-weight: 700;
+  padding: var(--space-12) var(--space-16);
+  border-bottom: 2px solid var(--color-tinta);
+}
+
+.data-table td {
+  padding: var(--space-12) var(--space-16);
+  border-bottom: 1px solid var(--color-garis-halus);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table .text-right {
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+/* Ringkasan Angka Metrik */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-16);
+  margin-bottom: var(--space-32);
+}
+
+.metric-card {
+  background-color: var(--color-putih);
+  border: var(--border-tegas);
+  padding: var(--space-20);
+}
+
+.metric-label {
+  font-size: var(--text-14);
+  color: var(--color-biru-abu);
+  margin-bottom: var(--space-4);
+}
+
+.metric-value {
+  font-family: var(--font-display);
+  font-size: var(--text-28);
+  font-weight: 800;
+  color: var(--color-tinta);
+}
+
+/* --------------------------------------------------------------------------
+   13. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--color-garis-halus);
+  padding: var(--space-24) 0;
+  background-color: #E5EBF4;
+  color: var(--color-biru-abu);
+  font-size: var(--text-14);
+}
+
+.site-footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+}
+
+/* --------------------------------------------------------------------------
+   14. Responsif Mobile (Lebar HP 360px - 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .site-header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .site-nav {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: var(--space-4);
+  }
+
+  .ticket-card {
+    flex-direction: column;
+  }
+
+  .ticket-stub {
+    flex: 1 1 auto;
+    min-width: 100%;
+    border-top: none;
+  }
+
+  .ticket-perforation {
+    width: 100%;
+    height: 0;
+    border-left: none;
+    border-top: 2px dashed var(--color-perforasi);
+  }
+
+  /* Notches pindah ke sisi kiri dan kanan pada tampilan mobile */
+  .ticket-notch-top {
+    top: -13px;
+    left: -2px;
+    width: 13px;
+    height: 26px;
+    border-radius: 0 14px 14px 0;
+    border: 2px solid var(--color-tinta);
+    border-left: none;
+    clip-path: none;
+  }
+
+  .ticket-notch-bottom {
+    top: -13px;
+    right: -2px;
+    left: auto;
+    bottom: auto;
+    width: 13px;
+    height: 26px;
+    border-radius: 14px 0 0 14px;
+    border: 2px solid var(--color-tinta);
+    border-right: none;
+    clip-path: none;
+  }
+
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .price-summary-card {
+    position: static;
+  }
+
+  .ticket-code-display {
+    font-size: var(--text-20);
+    padding: var(--space-8);
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+}
+
+/* --------------------------------------------------------------------------
+   15. Media Print (Cetak Tiket Bersih)
+   -------------------------------------------------------------------------- */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  .site-header,
+  .site-footer,
+  .print-hide,
+  .btn,
+  .stepper-nav {
+    display: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .ticket-digital-wrapper {
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .ticket-card {
+    border: 2px solid #000000 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  .stamp {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
