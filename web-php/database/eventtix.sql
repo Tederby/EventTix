@@ -137,3 +137,4 @@ CREATE TABLE IF NOT EXISTS `check_in` (
     `catatan` VARCHAR(255) DEFAULT '',
     FOREIGN KEY (`id_panitia`) REFERENCES `users`(`id_user`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

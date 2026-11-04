@@ -4,9 +4,9 @@ require_once __DIR__ . '/includes/init.php';
 
 $allEvents = $dataManager->getEvents();
 
-// Filter: jangan tampilkan event yang berstatus Dihapus
+// Filter: hanya tampilkan event yang statusnya Buka (event yang ditutup tidak ditampilkan di katalog)
 $events = array_values(array_filter($allEvents, function($ev) {
-    return $ev->getStatusEvent() !== 'Dihapus';
+    return $ev->getStatusEvent() === 'Buka';
 }));
 
 // Pisahkan event terdekat sebagai hero dan event lainnya
@@ -113,6 +113,10 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       </div>
     </article>
+  </div>
+<?php else: ?>
+  <div class="empty-state" style="margin-bottom: 2rem;">
+    <p>Belum ada acara dengan pendaftaran terbuka saat ini. Silakan periksa kembali nanti untuk jadwal seminar dan event terbaru.</p>
   </div>
 <?php endif; ?>
 
