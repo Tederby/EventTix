@@ -83,13 +83,17 @@ Kalau sudah selesai ngoding di bagian masing-masing, jalankan 3 perintah ini:
 ```bash
 git add .
 git commit -m "Pesan commit"
-git push origin <nama-branch>
+git push
 
 ```
 
-**Contoh kalau lagi di bagian pembayaran:**
-`git push origin pembayaran`
+**`git push` saja karena tiap branch push origin-nya sudah ke masing-masing branch. Tapi kalau memang mau lebih yakin bisa pake ini:**
+```bash
+git push origin <nama_branch>
 
+# Contoh
+git push origin tiket-checkin
+```
 ---
 
 ## 📊 Referensi Desain
