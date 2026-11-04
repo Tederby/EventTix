@@ -1,31 +1,72 @@
 <?php
 // web-php/config/database.php
-// Konfigurasi Koneksi Database MySQL EventTix
+// Konfigurasi Koneksi Database PostgreSQL (Neon / Supabase) & Fallback
 
 class Database {
     private static ?PDO $instance = null;
-
-    private static string $host = '127.0.0.1';
-    private static string $port = '3306';
-    private static string $dbname = 'eventtix';
-    private static string $username = 'root';
-    private static string $password = '';
+    private static bool $attempted = false;
 
     public static function getConnection(): ?PDO {
-        if (self::$instance === null) {
+        if (self::$attempted) {
+            return self::$instance;
+        }
+
+        self::$attempted = true;
+
+        // 1. Cek variabel DATABASE_URL atau POSTGRES_URL dari Vercel / Neon / Supabase
+        $dbUrl = getenv('DATABASE_URL') ?: getenv('POSTGRES_URL') ?: '';
+
+        if (!empty($dbUrl)) {
+            $parsed = parse_url($dbUrl);
+            if ($parsed && isset($parsed['host'])) {
+                $host = $parsed['host'];
+                $port = $parsed['port'] ?? 5432;
+                $user = $parsed['user'] ?? '';
+                $pass = $parsed['pass'] ?? '';
+                $dbname = ltrim($parsed['path'] ?? 'neondb', '/');
+
+                try {
+                    $dsn = "pgsql:host={$host};port={$port};dbname={$dbname};sslmode=require";
+                    self::$instance = new PDO($dsn, $user, $pass, [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                        PDO::ATTR_EMULATE_PREPARES => false,
+                    ]);
+                    return self::$instance;
+                } catch (PDOException $e) {
+                    error_log('PostgreSQL Neon Connection Error: ' . $e->getMessage());
+                    self::$instance = null;
+                    return null;
+                }
+            }
+        }
+
+        // 2. Cek variabel individual (PGHOST, PGDATABASE, dll)
+        $host = getenv('PGHOST');
+        if (!empty($host)) {
+            $port = getenv('PGPORT') ?: '5432';
+            $dbname = getenv('PGDATABASE') ?: 'neondb';
+            $user = getenv('PGUSER') ?: 'neondb_owner';
+            $pass = getenv('PGPASSWORD') ?: '';
+            $sslmode = getenv('PGSSLMODE') ?: 'require';
+
             try {
-                $dsn = "mysql:host=" . self::$host . ";port=" . self::$port . ";dbname=" . self::$dbname . ";charset=utf8mb4";
-                self::$instance = new PDO($dsn, self::$username, self::$password, [
+                $dsn = "pgsql:host={$host};port={$port};dbname={$dbname};sslmode={$sslmode}";
+                self::$instance = new PDO($dsn, $user, $pass, [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                     PDO::ATTR_EMULATE_PREPARES => false,
                 ]);
+                return self::$instance;
             } catch (PDOException $e) {
-                // Jika koneksi MySQL belum disiapkan, aplikasi fallback ke JSON DataManager
+                error_log('PostgreSQL Connection Error: ' . $e->getMessage());
                 self::$instance = null;
+                return null;
             }
         }
-        return self::$instance;
+
+        // 3. Fallback jika tidak ada database cloud: return null (aplikasi otomatis pakai store.json)
+        self::$instance = null;
+        return null;
     }
 }
-
