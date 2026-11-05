@@ -98,7 +98,7 @@ git push origin tiket-checkin
 
 ## 📊 Referensi Desain
 
-* 🖼️ **[Lihat Class Diagram (Gambar)](https://www.google.com/search?q=docs/class_diagram.jpeg)**
+* 🖼️ **[Lihat Class Diagram (Gambar)](docs/class_diagram.jpeg)**
 
 
 ---
