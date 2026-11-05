@@ -171,9 +171,8 @@ public class Main {
             Pembayaran pembayaranTransfer = new PembayaranTransfer(
                     "PAY-" + System.currentTimeMillis(),
                     pesananSiti.hitungTotal(),
-                    new Date(),
                     "Bank Mandiri",
-                    "1370-00-998877-6"
+                    "1370009988776"
             );
             pesananSiti.setPembayaran(pembayaranTransfer);
 
@@ -181,7 +180,10 @@ public class Main {
             System.out.println("  Biaya Admin: Rp " + String.format("%,.0f", pembayaranTransfer.hitungBiayaAdmin()));
             System.out.println("  Grand Total Bayar: Rp " + String.format("%,.0f", pembayaranTransfer.getTotalBayar()));
 
+            System.out.println("[*] Memverifikasi bukti transfer...");
+            ((PembayaranTransfer) pembayaranTransfer).verifikasiBukti("bukti_transfer_mandiri.jpg");
             pembayaranTransfer.prosesPembayaran();
+            System.out.println("  Status Pembayaran: " + pembayaranTransfer.getStatusBayar());
             pesananSiti.konfirmasi();
         }
         System.out.println();
