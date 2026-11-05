@@ -128,3 +128,4 @@ CREATE TABLE IF NOT EXISTS check_in (
     status_checkin VARCHAR(20) NOT NULL CHECK (status_checkin IN ('VALID', 'DITOLAK')),
     catatan VARCHAR(255) DEFAULT ''
 );
+
