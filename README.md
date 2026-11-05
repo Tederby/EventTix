@@ -48,6 +48,16 @@ Proyek ini dibangun dalam dua platform paralel yang mengacu pada satu kontrak ar
 
 ---
 
+## Diagram Kelas & Arsitektur Sistem
+
+Dokumentasi arsitektur EventTix disajikan dalam dua sudut pandang diagram kelas untuk merekam evolusi perancangan:
+1. **Diagram Perencanaan / Konseptual (*Design-Time Blueprint*)**: Mengacu pada rancangan awal kelas dan relasi di [`docs/class_diagram.jpeg`](docs/class_diagram.jpeg).
+2. **Diagram Hasil Implementasi (*As-Built Architecture*)**: Merefleksikan kondisi nyata setelah pengodean (penambahan atribut koleksi navigasi runtime, metode overload konsol, konstanta sistem, dan layer Singleton `DataManager`).
+
+Detail perbandingan kedua diagram dapat dilihat pada [`docs/ARCHITECTURE_SPEC.md`](docs/ARCHITECTURE_SPEC.md).
+
+---
+
 ## Struktur Direktori
 
 ```text

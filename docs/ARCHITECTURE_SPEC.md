@@ -16,6 +16,14 @@ Dokumen ini merupakan referensi teknis utama (Single Source of Truth) untuk asis
 
 ## 2. Diagram Kelas (Mermaid.js Reference)
 
+Arsitektur EventTix menyajikan dua sudut pandang diagram kelas untuk mendokumentasikan evolusi rancangan sistem:
+1. **Diagram Konseptual / Perencanaan (*Design-Time Blueprint*)**: Blueprint awal perancangan PBO sesuai referensi gambar `docs/class_diagram.jpeg`.
+2. **Diagram Hasil Implementasi (*As-Built Architecture*)**: Kondisi nyata setelah integrasi kode pada Java Console dan Web PHP.
+
+---
+
+### 2.1 Diagram Kelas Konseptual / Perencanaan (Design-Time Blueprint)
+
 ```mermaid
 classDiagram
     class User {
