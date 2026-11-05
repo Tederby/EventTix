@@ -151,7 +151,7 @@ Aplikasi web dapat dijalankan secara instan tanpa perlu menyiapkan server databa
 
 ---
 
-## 👥 Kontribusi & Pembagian Modul Tim (Kelompok 6)
+## Kontribusi & Pembagian Modul Tim (Kelompok 6)
 
 * **Modul 1 (Web PHP & MySQL)**: Rancang bangun antarmuka web, skema database STI, dan integrasi DAL DataManager.
 * **Modul 2 (Pengguna & Event - Java)**: `User`, `Panitia`, `Peserta`, `Event`, dan orkestrasi skenario di `Main.java`.
