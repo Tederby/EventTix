@@ -46,30 +46,32 @@ public class Peserta extends User {
      * @return Daftar event yang diperiksa
      */
     public List<Event> lihatEvent(List<Event> daftarEvent) {
-        System.out.println("\n=========================================================================================");
-        System.out.println("                              KATALOG EVENT KAMPUS TERSEDIA                             ");
-        System.out.println("=========================================================================================");
-        System.out.printf("%-12s | %-28s | %-16s | %-15s | %-8s | %-6s\n",
-                "ID Event", "Nama Event", "Tanggal", "Lokasi", "Sisa/Total", "Status");
-        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println("\n=========================================================================================================");
+        System.out.println("                                      KATALOG EVENT KAMPUS TERSEDIA                                      ");
+        System.out.println("=========================================================================================================");
+        System.out.printf("%-12s | %-26s | %-16s | %-15s | %-13s | %-10s | %-6s\n",
+                "ID Event", "Nama Event", "Tanggal", "Lokasi", "Harga Mulai", "Sisa/Total", "Status");
+        System.out.println("---------------------------------------------------------------------------------------------------------");
 
         if (daftarEvent == null || daftarEvent.isEmpty()) {
-            System.out.println("               Belum ada event yang tersedia saat ini.                    ");
+            System.out.println("                       Belum ada event yang tersedia saat ini.                                    ");
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             for (Event evt : daftarEvent) {
                 String tglStr = evt.getTanggal() != null ? sdf.format(evt.getTanggal()) : "-";
                 String kuotaStr = evt.getSisaKuota() + "/" + evt.getKuota();
-                System.out.printf("%-12s | %-28s | %-16s | %-15s | %-10s | %-6s\n",
+                String hargaStr = String.format("Rp %,.0f", evt.getHargaDasar());
+                System.out.printf("%-12s | %-26s | %-16s | %-15s | %-13s | %-10s | %-6s\n",
                         evt.getIdEvent(),
                         evt.getNamaEvent(),
                         tglStr,
                         evt.getLokasi(),
+                        hargaStr,
                         kuotaStr,
                         evt.getStatusEvent());
             }
         }
-        System.out.println("=========================================================================================\n");
+        System.out.println("=========================================================================================================\n");
         return daftarEvent;
     }
 
@@ -111,10 +113,10 @@ public class Peserta extends User {
         String idPesanan = "ORD-" + System.currentTimeMillis();
         Pesanan pesananBaru = new Pesanan(idPesanan, new Date(), "Pending", this, event);
 
-        // Alokasikan tiket default reguler atau sesuai inventaris event
+        // Alokasikan tiket default reguler dengan snapshot harga dasar dari event
         for (int i = 1; i <= jumlah; i++) {
             String kodeTiket = "TIX-" + event.getIdEvent() + "-" + (event.getTiketTerjual() + i);
-            TiketReguler tiket = new TiketReguler(kodeTiket, 50000.0);
+            TiketReguler tiket = new TiketReguler(kodeTiket, event.getHargaDasar());
             pesananBaru.tambahTiket(tiket);
         }
 

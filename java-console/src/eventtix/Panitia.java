@@ -37,7 +37,26 @@ public class Panitia extends User {
     }
 
     /**
-     * Membuat objek Event baru dengan parameter lengkap dan mendaftarkannya ke daftar event yang dikelola.
+     * Membuat objek Event baru dengan parameter lengkap termasuk harga dasar dan mendaftarkannya ke daftar event yang dikelola.
+     *
+     * @param idEvent    Kode unik event
+     * @param namaEvent  Nama event
+     * @param deskripsi  Informasi rincian event
+     * @param tanggal    Waktu pelaksanaan event
+     * @param lokasi     Tempat pelaksanaan event
+     * @param kuota      Kapasitas maksimum peserta
+     * @param hargaDasar Nominal harga dasar katalog tiket event
+     * @return Objek Event yang berhasil dibuat
+     */
+    public Event buatEvent(String idEvent, String namaEvent, String deskripsi, Date tanggal, String lokasi, int kuota, double hargaDasar) {
+        Event eventBaru = new Event(idEvent, namaEvent, deskripsi, tanggal, lokasi, kuota, hargaDasar);
+        this.daftarEventDikelola.add(eventBaru);
+        System.out.println("[SUKSES] Panitia " + getNama() + " (" + jabatan + ") berhasil membuat event: '" + namaEvent + "' [Harga Mulai: Rp " + String.format("%,.0f", hargaDasar) + "].");
+        return eventBaru;
+    }
+
+    /**
+     * Overload metode buatEvent untuk kompatibilitas ke belakang (tanpa parameter hargaDasar, default 0.0).
      *
      * @param idEvent   Kode unik event
      * @param namaEvent Nama event
@@ -48,10 +67,7 @@ public class Panitia extends User {
      * @return Objek Event yang berhasil dibuat
      */
     public Event buatEvent(String idEvent, String namaEvent, String deskripsi, Date tanggal, String lokasi, int kuota) {
-        Event eventBaru = new Event(idEvent, namaEvent, deskripsi, tanggal, lokasi, kuota);
-        this.daftarEventDikelola.add(eventBaru);
-        System.out.println("[SUKSES] Panitia " + getNama() + " (" + jabatan + ") berhasil membuat event: '" + namaEvent + "'.");
-        return eventBaru;
+        return buatEvent(idEvent, namaEvent, deskripsi, tanggal, lokasi, kuota, 0.0);
     }
 
     /**
@@ -166,8 +182,8 @@ public class Panitia extends User {
                 }
             }
         } else {
-            // Asumsi dasar estimasi harga tiket reguler jika daftar individual belum terpopulasi
-            totalPendapatan = event.getTiketTerjual() * 50000.0;
+            // Estimasi pendapatan berbasis data master hargaDasar event jika daftar tiket individual belum terpopulasi
+            totalPendapatan = event.getTiketTerjual() * event.getHargaDasar();
         }
 
         System.out.println("Total Pendapatan : Rp " + String.format("%,.0f", totalPendapatan));

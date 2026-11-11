@@ -103,15 +103,16 @@ public class Main {
                 "Masa Depan AI dan Implementasi Generative Model di Industri",
                 tanggalEvent,
                 "Auditorium Utama Lantai 3 Kampus Terpadu",
-                50 // Kuota 50 tiket
+                50, // Kuota 50 tiket
+                75000.0 // Harga dasar master: Rp 75.000
         );
 
         // Tambahkan ke katalog event global
         katalogEvent.add(eventAI);
 
         // Persiapkan beberapa tiket ke dalam inventaris event (Reguler & VIP)
-        TiketReguler tiketRegulerContoh = new TiketReguler("TIX-REG-001", 75000.0);
-        TiketVIP tiketVIPContoh = new TiketVIP("TIX-VIP-001", 75000.0, 50000.0, "A-01");
+        TiketReguler tiketRegulerContoh = new TiketReguler("TIX-REG-001", eventAI.getHargaDasar());
+        TiketVIP tiketVIPContoh = new TiketVIP("TIX-VIP-001", eventAI.getHargaDasar(), 50000.0, "A-01");
         eventAI.tambahTiket(tiketRegulerContoh);
         eventAI.tambahTiket(tiketVIPContoh);
 
@@ -141,10 +142,10 @@ public class Main {
         Pesanan pesananSiti = peserta.buatPesanan(eventAI, jumlahBeli);
 
         if (pesananSiti != null) {
-            // Setup detail tiket pesanan
+            // Setup detail tiket pesanan dengan snapshot harga dasar dari master event
             pesananSiti.getDaftarTiket().clear(); // Reset dummy awal
-            Tiket tiket1 = new TiketReguler("TIX-AI-001", 75000.0);
-            Tiket tiket2 = new TiketVIP("TIX-AI-002", 75000.0, 50000.0, "VIP-07");
+            Tiket tiket1 = new TiketReguler("TIX-AI-001", eventAI.getHargaDasar());
+            Tiket tiket2 = new TiketVIP("TIX-AI-002", eventAI.getHargaDasar(), 50000.0, "VIP-07");
 
             pesananSiti.tambahTiket(tiket1);
             pesananSiti.tambahTiket(tiket2);
@@ -189,11 +190,25 @@ public class Main {
         System.out.println();
 
         // ====================================================================
-        // TAHAP 6: PANITIA MENGECEK KUOTA & LAPORAN PENJUALAN
+        // TAHAP 6: PANITIA MENGECEK KUOTA, LAPORAN PENJUALAN, & UJI SNAPSHOT HARGA
         // ====================================================================
         System.out.println(">>> [TAHAP 6] PANITIA MEMERIKSA STATUS KUOTA & LAPORAN PENJUALAN");
         panitia.kelolaEvent(eventAI);
         panitia.lihatLaporanPenjualan(eventAI);
+
+        // Uji Snapshot Historis Transaksi:
+        // Panitia menaikkan harga master Event, membuktikan tiket yang sudah dipesan tidak terpengaruh
+        System.out.println("[UJI ARSITEKTUR: SNAPSHOT HARGA HISTORIS TIKET VS DATA MASTER EVENT]");
+        System.out.println("-> Harga master Event saat ini       : Rp " + String.format("%,.0f", eventAI.getHargaDasar()));
+        System.out.println("-> Panitia menaikkan harga event menjadi Rp 95.000 (Fase Regular / Late Bird)...");
+        eventAI.setHargaDasar(95000.0);
+        System.out.println("-> Harga master Event terbaru        : Rp " + String.format("%,.0f", eventAI.getHargaDasar()));
+        
+        Tiket tiketTerbeli = pesananSiti.getDaftarTiket().get(0);
+        System.out.println("-> Harga dasar pada tiket Siti       : Rp " + String.format("%,.0f", tiketTerbeli.getHargaDasar()) + 
+                " [TERKUNCI / IMMUTABLE]");
+        System.out.println("-> Total hitungHarga() tiket Siti    : Rp " + String.format("%,.0f", tiketTerbeli.hitungHarga()));
+        System.out.println("-> Kesimpulan: Tiket peserta TIDAK terpengaruh perubahan harga event di kemudian hari (Snapshot Valid)!\n");
 
         // ====================================================================
         // TAHAP 7: SIMULASI CHECK-IN DI HARI H ACARA OLEH PANITIA

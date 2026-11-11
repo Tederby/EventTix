@@ -70,11 +70,14 @@ classDiagram
         -int kuota
         -int tiketTerjual
         -String statusEvent
+        -double hargaDasar
         +cekKetersediaan(int jumlah) boolean
         +kurangiKuota(int jumlah) void
         +isPenuh() boolean
         +getSisaKuota() int
         +tutupPenjualan() void
+        +getHargaDasar() double
+        +setHargaDasar(double hargaDasar) void
     }
 
     class KodePromo {
@@ -201,8 +204,8 @@ classDiagram
 
 
 4. **`Event`**
-* **Atribut:** `private String idEvent`, `private String namaEvent`, `private String deskripsi`, `private Date tanggal`, `private String lokasi`, `private int kuota`, `private int tiketTerjual`, `private String statusEvent`, serta referensi `List<Tiket> daftarTiket`.
-* **Metode:** `cekKetersediaan(int jumlah): boolean`, `kurangiKuota(int jumlah): void`, `isPenuh(): boolean`, `getSisaKuota(): int` (mengembalikan `kuota - tiketTerjual`), `tutupPenjualan(): void`.
+* **Atribut:** `private String idEvent`, `private String namaEvent`, `private String deskripsi`, `private Date tanggal`, `private String lokasi`, `private int kuota`, `private int tiketTerjual`, `private String statusEvent`, `private double hargaDasar`, serta referensi `List<Tiket> daftarTiket`.
+* **Metode:** `cekKetersediaan(int jumlah): boolean`, `kurangiKuota(int jumlah): void`, `isPenuh(): boolean`, `getSisaKuota(): int` (mengembalikan `kuota - tiketTerjual`), `tutupPenjualan(): void`, `getHargaDasar(): double`, `setHargaDasar(double hargaDasar): void`.
 
 
 

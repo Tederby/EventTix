@@ -22,19 +22,24 @@ public class Event {
     private int kuota;
     private int tiketTerjual;
     private String statusEvent; // "Buka" atau "Tutup"
+    private double hargaDasar;
     private List<Tiket> daftarTiket;
 
     /**
-     * Konstruktor untuk inisialisasi Event baru.
+     * Konstruktor utama untuk inisialisasi Event baru dengan data master harga.
      *
-     * @param idEvent   Kode unik identitas event (contoh: "EVT-2026-001")
-     * @param namaEvent Nama atau judul acara
-     * @param deskripsi Ringkasan informasi acara
-     * @param tanggal   Waktu pelaksanaan event
-     * @param lokasi    Tempat diselenggarakannya event
-     * @param kuota     Batas maksimal kapasitas tiket peserta
+     * @param idEvent    Kode unik identitas event (contoh: "EVT-2026-001")
+     * @param namaEvent  Nama atau judul acara
+     * @param deskripsi  Ringkasan informasi acara
+     * @param tanggal    Waktu pelaksanaan event
+     * @param lokasi     Tempat diselenggarakannya event
+     * @param kuota      Batas maksimal kapasitas tiket peserta
+     * @param hargaDasar Nominal harga dasar katalog untuk tiket event
      */
-    public Event(String idEvent, String namaEvent, String deskripsi, Date tanggal, String lokasi, int kuota) {
+    public Event(String idEvent, String namaEvent, String deskripsi, Date tanggal, String lokasi, int kuota, double hargaDasar) {
+        if (hargaDasar < 0.0) {
+            throw new IllegalArgumentException("Harga dasar event tidak boleh negatif.");
+        }
         this.idEvent = idEvent;
         this.namaEvent = namaEvent;
         this.deskripsi = deskripsi;
@@ -43,7 +48,22 @@ public class Event {
         this.kuota = kuota;
         this.tiketTerjual = 0;
         this.statusEvent = "Buka";
+        this.hargaDasar = hargaDasar;
         this.daftarTiket = new ArrayList<>();
+    }
+
+    /**
+     * Konstruktor overloaded untuk kompatibilitas ke belakang (default hargaDasar = 0.0).
+     *
+     * @param idEvent   Kode unik identitas event
+     * @param namaEvent Nama acara
+     * @param deskripsi Ringkasan informasi acara
+     * @param tanggal   Waktu pelaksanaan event
+     * @param lokasi    Tempat acara
+     * @param kuota     Batas maksimal kapasitas tiket
+     */
+    public Event(String idEvent, String namaEvent, String deskripsi, Date tanggal, String lokasi, int kuota) {
+        this(idEvent, namaEvent, deskripsi, tanggal, lokasi, kuota, 0.0);
     }
 
     /**
@@ -201,12 +221,23 @@ public class Event {
         this.daftarTiket = daftarTiket;
     }
 
+    public double getHargaDasar() {
+        return hargaDasar;
+    }
+
+    public void setHargaDasar(double hargaDasar) {
+        if (hargaDasar < 0.0) {
+            throw new IllegalArgumentException("Harga dasar event tidak boleh negatif.");
+        }
+        this.hargaDasar = hargaDasar;
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String tglStr = (tanggal != null) ? sdf.format(tanggal) : "-";
-        return String.format("[%s] %s | Tgl: %s | Lokasi: %s | Kuota: %d/%d (Sisa: %d) | Status: %s",
-                idEvent, namaEvent, tglStr, lokasi, tiketTerjual, kuota, getSisaKuota(), statusEvent);
+        return String.format("[%s] %s | Tgl: %s | Lokasi: %s | Kuota: %d/%d (Sisa: %d) | Harga: Rp %,.0f | Status: %s",
+                idEvent, namaEvent, tglStr, lokasi, tiketTerjual, kuota, getSisaKuota(), hargaDasar, statusEvent);
     }
 }
 
