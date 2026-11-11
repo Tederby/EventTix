@@ -1,20 +1,31 @@
 <?php
 // web/classes/Tiket.php
 abstract class Tiket {
+    public const STATUS_TERSEDIA = 'Tersedia';
+    public const STATUS_TERJUAL = 'Terjual';
+    public const STATUS_TERPAKAI = 'Terpakai';
+    public const STATUS_AKTIF = 'AKTIF';
+
     protected string $kodeTiket;
     protected float $hargaDasar;
-    protected string $statusTiket; // 'AKTIF', 'TERPAKAI', 'DIBATALKAN'
+    protected string $statusTiket; // 'Tersedia', 'Terjual', 'Terpakai' / 'AKTIF'
     protected string $idEvent;
     protected string $idPesanan;
 
     public function __construct(
         string $kodeTiket,
         float $hargaDasar,
-        string $statusTiket = 'AKTIF',
+        string $statusTiket = self::STATUS_AKTIF,
         string $idEvent = '',
         string $idPesanan = ''
     ) {
-        $this->kodeTiket = $kodeTiket;
+        if (empty($kodeTiket)) {
+            throw new InvalidArgumentException("Kode tiket tidak boleh kosong.");
+        }
+        if ($hargaDasar < 0.0) {
+            throw new InvalidArgumentException("Harga dasar tiket tidak boleh negatif.");
+        }
+        $this->kodeTiket = trim($kodeTiket);
         $this->hargaDasar = $hargaDasar;
         $this->statusTiket = $statusTiket;
         $this->idEvent = $idEvent;
@@ -32,11 +43,10 @@ abstract class Tiket {
     public function getIdPesanan(): string { return $this->idPesanan; }
 
     public function tandaiTerpakai(): void {
-        $this->statusTiket = 'TERPAKAI';
+        $this->statusTiket = self::STATUS_TERPAKAI;
     }
 
     public function setStatusTiket(string $status): void {
         $this->statusTiket = $status;
     }
 }
-

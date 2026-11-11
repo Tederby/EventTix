@@ -12,7 +12,7 @@ class PembayaranEWallet extends Pembayaran {
         string $providerWallet = 'GoPay',
         string $noAkun = '0812-3456-7890',
         string $waktuBayar = '',
-        string $statusBayar = 'LUNAS'
+        string $statusBayar = self::STATUS_LUNAS
     ) {
         parent::__construct($idPembayaran, $jumlah, $waktuBayar, $statusBayar);
         $this->providerWallet = $providerWallet;
@@ -20,11 +20,12 @@ class PembayaranEWallet extends Pembayaran {
     }
 
     public function hitungBiayaAdmin(): float {
-        return 1000.0; // Biaya admin e-wallet Rp 1.000
+        // Biaya admin e-wallet: 1% dari total pesanan, minimal Rp 1.000
+        return max(1000.0, round($this->jumlah * 0.01));
     }
 
     public function prosesPembayaran(): bool {
-        $this->statusBayar = 'LUNAS';
+        $this->statusBayar = self::STATUS_LUNAS;
         return true;
     }
 
@@ -39,4 +40,3 @@ class PembayaranEWallet extends Pembayaran {
         return 'Selesaikan otorisasi pembayaran melalui aplikasi ' . $this->providerWallet . ' ke nomor ' . $this->noAkun . '.';
     }
 }
-
